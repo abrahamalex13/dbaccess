@@ -1,0 +1,4 @@
+include ./DBAccess/VERSION
+include requirements.txt
+include README.md
+recursive-include ./DBAccess/*

@@ -2,7 +2,7 @@ from pathlib import Path
 import setuptools
 
 DIR_ROOT = Path(__file__).resolve().parent
-DIR_PACKAGE = DIR_ROOT / 'DBAccess'
+DIR_PACKAGE = DIR_ROOT / 'dbaccess'
 
 with open(DIR_PACKAGE / "VERSION") as f:
     _version = f.read().strip()
@@ -14,7 +14,7 @@ def list_reqs(filename="requirements.txt"):
         return f.read().splitlines()
 
 setuptools.setup(
-    name="DBAccess"
+    name="dbaccess"
     , version=VERSION
     , author="Alex Abraham"
     , author_email="earlyassessments@gmail.com"
@@ -23,6 +23,6 @@ setuptools.setup(
     , packages=setuptools.find_packages(
         exclude=("tests")
         )
-    , package_data={"DBAccess": ["VERSION"]}
+    , package_data={"dbaccess": ["VERSION"]}
     , include_package_data=True
     )

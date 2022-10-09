@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 import pytest
 
-import DBAccess as dbac
+import dbaccess as dbac
 
 load_dotenv()
 

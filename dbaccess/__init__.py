@@ -1,7 +1,4 @@
-from DBAccess.DBSpecs import DBSpecs, AWSRDSSpecs
-from DBAccess.DBAccessAuthenticator import (
-    DBAccessAuthenticator, AWSRDSAccessAuthenticator
-    )
-from DBAccess.DBAccess import (
-    DBAccess, PostgresDBAccess
-    )
+from dbaccess.specs import DBSpecs, AWSRDSSpecs
+from dbaccess.authenticator import DBAccessAuthenticator, AWSRDSAccessAuthenticator
+from dbaccess.access import DBAccess, PostgresDBAccess
+

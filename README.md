@@ -1,4 +1,4 @@
-# DBAccess: One Python Interface for Accessing Any Database
+# `dbaccess`: One Python Interface for Accessing Any Database
 
 It is challenging to keep track of the many Python interfaces
 used for database connection. Moreover, for many cases,
@@ -23,7 +23,7 @@ database connection don't vary too much:
 
 Translate the above steps to a fundamental code workflow:
 ```
-    import DBAccess as dbac
+    import dbaccess as dbac
     
     db_specs = dbac.DBSpecs(...).format()
     db_access_authenticator = dbac.DBAccessAuthenticator(db_specs).authenticate()

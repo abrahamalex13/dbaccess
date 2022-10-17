@@ -1,6 +1,5 @@
 import boto3
 import sqlalchemy
-from dbaccess import authenticator
 
 KEYWORDS_GENERATE_AUTH_TOKEN = [
     "AWS_IAM_TOKEN"

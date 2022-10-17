@@ -2,7 +2,7 @@ import boto3
 import sqlalchemy
 
 KEYWORDS_GENERATE_AUTH_TOKEN = [
-    "AWS_IAM_TOKEN"
+    "AWS_RDS_IAM_TOKEN"
 ]
 
 def create_engine_from_specs(db_specs):

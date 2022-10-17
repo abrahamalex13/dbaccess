@@ -13,7 +13,7 @@ def pg_engine():
     engine = dbac.create_engine_from_specs({
         'drivername': 'postgresql'
         , 'username': os.environ.get('USER_DB')
-        , 'password': 'AWS_IAM_TOKEN'
+        , 'password': 'AWS_RDS_IAM_TOKEN'
         , 'host': os.environ.get('ENDPOINT_DB')
         , 'port': os.environ.get('PORT_DB')
         , 'database': os.environ.get('NAME_DB')

@@ -1,4 +1,4 @@
-def test_pg_engine(pg_engine):
+def test_aws_rds_engine(aws_rds_engine):
     
-    with pg_engine.connect() as conn:
+    with aws_rds_engine.connect() as conn:
         conn.exec_driver_sql("SELECT 2")

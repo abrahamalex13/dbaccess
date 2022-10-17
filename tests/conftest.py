@@ -8,9 +8,9 @@ load_dotenv()
 
 
 @pytest.fixture(scope="session")
-def pg_engine():
+def aws_rds_specs():
 
-    engine = dbac.create_engine_from_specs({
+    return {
         'drivername': 'postgresql'
         , 'username': os.environ.get('USER_DB')
         , 'password': 'AWS_RDS_IAM_TOKEN'
@@ -19,31 +19,12 @@ def pg_engine():
         , 'database': os.environ.get('NAME_DB')
         , 'region': os.environ.get('REGION_DB')
         , 'query': {'sslmode': 'require'}
-        })
-
-    return engine
+        }
 
 
 @pytest.fixture(scope="session")
-def aws_rds_specs0():
-
-    db_specs = dbac.DBSpecs(
-        cloud_platform="aws_rds",
-        profile_name="default",
-        endpoint=os.environ.get("ENDPOINT_DB"),
-        port=os.environ.get("PORT_DB"),
-        region=os.environ.get("REGION_DB"),
-        db_name=os.environ.get("NAME_DB"),
-        db_user=os.environ.get("USER_DB"),
-        engine_name="postgresql",
-    )
-
-    return db_specs
-
-
-@pytest.fixture(scope="session")
-def aws_rds_specs(aws_rds_specs0):
-    return aws_rds_specs0.format()
+def aws_rds_engine(aws_rds_specs):
+    return dbac.create_engine_from_specs(aws_rds_specs)
 
 
 @pytest.fixture(scope="session")

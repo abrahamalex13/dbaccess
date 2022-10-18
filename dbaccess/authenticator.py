@@ -1,3 +1,5 @@
+# Official AWS docs: 
+# https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/UsingWithRDS.IAMDBAuth.Connecting.Python.html
 import boto3
 
 

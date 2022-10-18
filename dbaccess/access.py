@@ -8,6 +8,29 @@ KEYS_DB_SPECS_URL = [
 ]
 
 def create_engine_from_specs(db_specs, service_client_specs=None):
+    """
+    Create a `sqlalchemy` connection engine from database specification details. 
+    Do so by: automating construction of engine URL, 
+    generating connection auth token (if prompted by db_specs password).
+
+    Parameters
+    ----------
+    db_specs : dict
+        Dict of database specification keywords & values.
+        Used to construct `sqlalchemy` connection engine URL
+        (authenticating connection if prompted).
+        Example keywords include: drivername, username, password, host, port, 
+        database [name], region, query. 
+        
+        Prompt auth token generation via `password` key: AWS_RDS_IAM_TOKEN.
+
+    service_client_specs : dict
+        Dict of [cloud computing] service client keywords & values.
+        Used to instantiate service client session,
+        through commands from a package like `boto3`. 
+        Example keywords include: profile_name, region_name.
+
+    """
 
     need_auth_token = db_specs["password"] in KEYWORDS_GENERATE_AUTH_TOKEN
 

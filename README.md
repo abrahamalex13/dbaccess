@@ -1,35 +1,34 @@
-# `dbaccess`: One Python Interface for Accessing Any Database
+# `dbaccess`: Helper for Database Authentication and Connection
 
-It is challenging to keep track of the many Python interfaces
-used for database connection. Moreover, for many cases,
-a single interface should do. The fundamental steps for 
-database connection don't vary too much:
+`dbaccess` aims to decrease analysts' time-to-data analysis,
+by abstracting away the boilerplate of database authentication and connection. 
+There are low-level details standard in calls to `boto3`, `sqlalchemy`, etc; 
+`dbaccess` handles those standard details for you. 
+**`boto3`, `sqlalchemy`, etc are already well-formulated -- 
+so `dbaccess` simply encapsulates typical workflows.**
 
-- Organize/declare database specifications, such as:
-    - Cloud platform name
-    - Cloud platform account profile/user name
-    - Endpoint URL and port
-    - Database's name
-    - Database account's user name
-    - Database engine name
+Ultimately, `dbaccess` returns a `sqlalchemy` engine,
+with less boilerplate to get there.
 
-- Authenticate database access, which may involve:
-    - Generating an access token
-        - AWS IAM
+## Getting Started
 
-- Establish database connection
-    - Use prerequisite authentication result
-    and database specs.
-
-Translate the above steps to a fundamental code workflow:
 ```
+    from dotenv import load_dotenv
+    import os
     import dbaccess as dbac
     
-    db_specs = dbac.DBSpecs(...).format()
-    db_access_authenticator = dbac.DBAccessAuthenticator(db_specs).authenticate()
-    db_access = dbac.DBAccess(db_access_authenticator).connect()
+    engine = dbac.create_engine_from_specs({
+        'drivername': 'postgresql'
+        , 'username': os.environ.get('USER_DB')
+        , 'password': 'AWS_RDS_IAM_TOKEN'
+        , 'host': os.environ.get('ENDPOINT_DB')
+        , 'port': os.environ.get('PORT_DB')
+        , 'database': os.environ.get('NAME_DB')
+        , 'region': os.environ.get('REGION_DB')
+        , 'query': {'sslmode': 'require'}
+        })
 
-    # give connection a final test, and proceed!
-    db_access.test_query(...)
-    db_access.query(...)
+    # give connection a test!
+    with engine.connect() as conn:
+        conn.exec_driver_sql("SELECT 2")
 ```

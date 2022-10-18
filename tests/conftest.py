@@ -24,9 +24,9 @@ def aws_rds_specs():
 
 @pytest.fixture(scope="session")
 def aws_rds_engine(aws_rds_specs):
-    return dbac.create_engine_from_specs(aws_rds_specs)
+    return dbac.create_engine_from_specs(aws_rds_specs, service_client_specs=None)
 
 
 @pytest.fixture(scope="session")
-def aws_rds_access_authenticator(aws_rds_specs):
-    return dbac.DBAccessAuthenticator(aws_rds_specs).authenticate()
+def aws_rds_authenticator(aws_rds_specs):
+    return dbac.get_authenticator(aws_rds_specs)(aws_rds_specs, service_client_specs=None)

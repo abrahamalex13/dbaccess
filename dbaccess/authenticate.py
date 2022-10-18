@@ -4,6 +4,9 @@ import boto3
 
 
 def get_authenticator(db_specs):
+    """
+    Return Authenticator class based on database specification details.
+    """
 
     if 'AWS' in db_specs['password'].upper():
         return AWSRDSAccessAuthenticator
@@ -12,6 +15,26 @@ def get_authenticator(db_specs):
 
 
 class AWSRDSAccessAuthenticator:
+    """
+    Generate auth token for database connection,
+    and store prerequisite cloud service client details.
+
+    Parameters
+    ----------
+    db_specs : dict
+        Dict of database specification keywords & values.
+        Example keywords include: drivername, username, password, host, port, 
+        database [name], region, query. 
+        
+        Prompt auth token generation via `password` key: AWS_RDS_IAM_TOKEN.
+
+    service_client_specs : dict
+        Dict of [cloud computing] service client keywords & values.
+        Used to instantiate service client session,
+        through commands from a package like `boto3`. 
+        Example keywords include: profile_name, region_name.
+
+    """
 
     def __init__(self, db_specs, service_client_specs=None):
 

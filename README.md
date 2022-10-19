@@ -16,6 +16,8 @@ with less boilerplate to get there.
     from dotenv import load_dotenv
     import os
     import dbaccess as dbac
+
+    load_dotenv()
     
     engine = dbac.create_engine_from_specs({
         'drivername': 'postgresql'

@@ -1,2 +1,2 @@
 from dbaccess.authenticate import get_authenticator, AWSRDSAccessAuthenticator
-from dbaccess.access import create_engine_from_specs
+from dbaccess.access import create_engine_from_details

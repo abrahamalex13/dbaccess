@@ -3,12 +3,12 @@
 import boto3
 
 
-def get_authenticator(db_specs):
+def get_authenticator(db_details):
     """
-    Return Authenticator class based on database specification details.
+    Return Authenticator class based on database implementation details.
     """
 
-    if 'AWS' in db_specs['password'].upper():
+    if 'AWS_RDS' in db_details['password'].upper():
         return AWSRDSAccessAuthenticator
     else:
         raise Exception("No corresponding authenticator object.")
@@ -21,14 +21,14 @@ class AWSRDSAccessAuthenticator:
 
     Parameters
     ----------
-    db_specs : dict
-        Dict of database specification keywords & values.
+    db_details : dict
+        Dict of database implementation details keywords & values.
         Example keywords include: drivername, username, password, host, port, 
         database [name], region, query. 
         
         Prompt auth token generation via `password` key: AWS_RDS_IAM_TOKEN.
 
-    service_client_specs : dict
+    service_client_details : dict
         Dict of [cloud computing] service client keywords & values.
         Used to instantiate service client session,
         through commands from a package like `boto3`. 
@@ -36,15 +36,15 @@ class AWSRDSAccessAuthenticator:
 
     """
 
-    def __init__(self, db_specs, service_client_specs=None):
+    def __init__(self, db_details, service_client_details=None):
 
-        self.db_specs = db_specs
+        self.db_details = db_details
 
-        if service_client_specs is not None:
-            self.service_client_specs = service_client_specs
+        if service_client_details is not None:
+            self.service_client_details = service_client_details
         else:
-            self.service_client_specs = {
-                'profile_name': None, 'region_name': self.db_specs['region']
+            self.service_client_details = {
+                'profile_name': None, 'region_name': self.db_details['region']
                 }
 
     def authenticate(self):
@@ -55,20 +55,20 @@ class AWSRDSAccessAuthenticator:
     def initialize_service_client(self):
 
         self.session = boto3.Session(
-            profile_name=self.service_client_specs['profile_name']
+            profile_name=self.service_client_details['profile_name']
             )
         
         self.client = self.session.client('rds'
-            , region_name=self.service_client_specs['region_name'] 
+            , region_name=self.service_client_details['region_name'] 
             )
 
     def generate_auth_token(self):
 
         kwargs = {
-            'DBHostname': self.db_specs['host']
-            , 'Port': self.db_specs['port']
-            , 'DBUsername': self.db_specs['username']
-            , 'Region': self.db_specs['region']
+            'DBHostname': self.db_details['host']
+            , 'Port': self.db_details['port']
+            , 'DBUsername': self.db_details['username']
+            , 'Region': self.db_details['region']
             }
 
         self.token = self.client.generate_db_auth_token(**kwargs)

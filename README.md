@@ -19,7 +19,7 @@ with less boilerplate to get there.
 
     load_dotenv()
     
-    engine = dbac.create_engine_from_specs({
+    engine = dbac.create_engine_from_details({
         'drivername': 'postgresql'
         , 'username': os.environ.get('USER_DB')
         , 'password': 'AWS_RDS_IAM_TOKEN'

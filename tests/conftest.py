@@ -8,7 +8,7 @@ load_dotenv()
 
 
 @pytest.fixture(scope="session")
-def aws_rds_specs():
+def aws_rds_details():
 
     return {
         'drivername': 'postgresql'
@@ -23,10 +23,12 @@ def aws_rds_specs():
 
 
 @pytest.fixture(scope="session")
-def aws_rds_engine(aws_rds_specs):
-    return dbac.create_engine_from_specs(aws_rds_specs, service_client_specs=None)
+def aws_rds_engine(aws_rds_details):
+    return dbac.create_engine_from_details(aws_rds_details, service_client_details=None)
 
 
 @pytest.fixture(scope="session")
-def aws_rds_authenticator(aws_rds_specs):
-    return dbac.get_authenticator(aws_rds_specs)(aws_rds_specs, service_client_specs=None)
+def aws_rds_authenticator(aws_rds_details):
+    return dbac.get_authenticator(aws_rds_details)(
+        aws_rds_details, service_client_details=None
+        )
